@@ -129,7 +129,13 @@ var getFile = function (req, res, next) {
       return res.end('Redirecting to ' + target);
     }
 
-    res.set('content-type', mime.lookup(filePath));
+    if (!filePath.endsWith('.json')) {
+      filePath += '.json';
+    }
+
+    var mime = mime.lookup(filePath);
+    console.log('content-type', mime);
+    res.set('content-type', mime);
     sendCode(200, req, res, next, data)(err);
   });
 };
