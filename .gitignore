@@ -1,1 +1,4 @@
 node_modules
+/target/
+/.apt_generated/
+/app/
