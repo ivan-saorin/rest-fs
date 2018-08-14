@@ -1,4 +1,8 @@
-node_modules
 /target/
 /.apt_generated/
 /app/
+/.settings/
+/.git/
+.classpath
+.factorypath
+.project
