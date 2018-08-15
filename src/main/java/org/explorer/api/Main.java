@@ -1,6 +1,14 @@
 package org.explorer.api;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 /**
  * 
@@ -27,6 +35,13 @@ public class Main {
         }
 
         Server server = new Server(Integer.valueOf(webPort));
+        
+        //Enable parsing of jndi-related parts of web.xml and jetty-env.xml
+        org.eclipse.jetty.webapp.Configuration.ClassList classlist = org.eclipse.jetty.webapp.Configuration.ClassList.setServerDefault(server);
+        //classlist.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration", "org.eclipse.jetty.plus.webapp.EnvConfiguration", "org.eclipse.jetty.plus.webapp.PlusConfiguration");
+        classlist.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration", "org.eclipse.jetty.annotations.AnnotationConfiguration");
+        
+        
         WebAppContext root = new WebAppContext();
 
         root.setContextPath("/");
@@ -46,4 +61,18 @@ public class Main {
         server.join();   
     }
 
+    
+    @SuppressWarnings("serial")
+    public static class HelloServlet extends HttpServlet
+    {
+        @Override
+        protected void doGet( HttpServletRequest request,
+                              HttpServletResponse response ) throws ServletException,
+                                                            IOException
+        {
+            response.setContentType("text/html");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println("<h1>Hello from HelloServlet</h1>");
+        }
+    }
 }

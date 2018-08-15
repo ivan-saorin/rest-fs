@@ -9,4 +9,16 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+	<context-param>
+		<param-name>fs.path</param-name>
+		<param-value>./data</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>ExplorerServlet</servlet-name>
+		<servlet-class>org.explorer.api.ExplorerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExplorerServlet</servlet-name>
+		<url-pattern>/explore/*</url-pattern>
+	</servlet-mapping>
 </web-app>
